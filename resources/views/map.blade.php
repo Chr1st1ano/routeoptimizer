@@ -97,29 +97,34 @@
         </div>
       </div>
 
-     <div class="form-group">
-  <label>Settings</label>
-  <div class="row">
-    <select id="vehicle" class="select">
-        <option value="car">Car</option>
-        <option value="motor">Motorcycle</option>
-        <option value="jeep">Jeepney</option>
-        <option value="tricycle">Tricycle</option>
-        <option value="walking">Walking</option>
-    </select>
+    <div class="form-group">
+      <label>Settings</label>
+      <div class="row">
+        <select id="vehicle" class="select">
+            <option value="car">Car</option>
+            <option value="motor">Motorcycle</option>
+            <option value="jeep">Jeepney</option>
+            <option value="tricycle">Tricycle</option>
+            <option value="walking">Walking</option>
+        </select>
 
-    <select id="traffic_manual" class="select">
-        <option value="auto">Auto (AI Detect)</option>
-        <option value="light">Light Traffic</option>
-        <option value="moderate">Moderate</option>
-        <option value="heavy">Heavy Traffic</option>
-    </select>
-  </div>
-  
-  <div class="row" style="margin-top: 10px;">
-    <input id="speed" type="number" class="input" placeholder="Speed (km/h)" value="40">
-  </div>
-</div>
+        <select id="ai_mode" class="select" style="font-weight: bold; color: #2563eb;">
+            <option value="optimized">✨ Optimized (AI)</option>
+            <option value="raw">⛔ Not Optimized</option>
+        </select>
+      </div>
+      
+      <div class="row" style="margin-top: 10px;">
+        <select id="traffic_manual" class="select">
+            <option value="auto">Traffic: Auto (AI)</option>
+            <option value="light">Force: Light</option>
+            <option value="moderate">Force: Moderate</option>
+            <option value="heavy">Force: Heavy</option>
+        </select>
+
+        <input id="speed" type="number" class="input" placeholder="Speed" value="40">
+      </div>
+    </div>
 
       <button id="calc" class="btn">Run Prediction</button>
       <button id="clear" class="btn clear-btn">Reset Map</button>
@@ -194,12 +199,9 @@
   // --- HELPER: GET REAL ADDRESS FROM COORDINATES ---
   async function getAddress(lat, lng) {
       try {
-          // Send request to OpenStreetMap Nominatim API
           const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`;
           const res = await fetch(url);
           const data = await res.json();
-          
-          // Return the clean address (first 3 parts)
           if(data.display_name) {
               return data.display_name.split(',').slice(0, 3).join(',');
           }
@@ -216,29 +218,21 @@
       const lng = e.latlng.lng;
 
       if (clickState === 0) {
-          // 1. Start Point Logic
+          // Start Point
           startCoords = [lat, lng];
           startMarker.setLatLng(startCoords).addTo(map);
-          
-          // Set placeholder while loading
           document.getElementById('from').value = "Fetching address..."; 
-          
-          // Fetch real address
           const address = await getAddress(lat, lng);
           document.getElementById('from').value = address; 
-          
           clickState = 1;
 
       } else {
-          // 2. Destination Logic
+          // Destination
           endCoords = [lat, lng];
           endMarker.setLatLng(endCoords).addTo(map);
-          
           document.getElementById('to').value = "Fetching address...";
-          
           const address = await getAddress(lat, lng);
           document.getElementById('to').value = address; 
-          
           clickState = 0;
           drawRoute();
       }
@@ -252,7 +246,7 @@
       if(speeds[type]) speedInput.value = speeds[type];
   });
 
-  // --- SEARCH SUGGESTIONS (Nominatim) ---
+  // --- SEARCH SUGGESTIONS ---
   function debounce(func, wait) {
       let timeout;
       return function(...args) {
@@ -299,7 +293,7 @@
   document.getElementById('from').addEventListener('input', debounce((e) => fetchSuggestions(e.target.value, 'from-suggestions', true), 500));
   document.getElementById('to').addEventListener('input', debounce((e) => fetchSuggestions(e.target.value, 'to-suggestions', false), 500));
 
-  // --- ROUTING LOGIC (With Road Name) ---
+  // --- ROUTING LOGIC ---
   async function drawRoute() {
       if(!startCoords || !endCoords) return null;
       const url = `https://router.project-osrm.org/route/v1/driving/${startCoords[1]},${startCoords[0]};${endCoords[1]},${endCoords[0]}?overview=full&geometries=geojson&steps=true`;
@@ -344,14 +338,15 @@
               'Content-Type': 'application/json',
               'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
           },
-         body: JSON.stringify({
-    from: document.getElementById('from').value,
-    to: document.getElementById('to').value,
-    real_distance: routeData.distance, 
-    user_speed: document.getElementById('speed').value,
-    vehicle_type: document.getElementById('vehicle').value,
-    detected_road: routeData.road,
-    manual_traffic: document.getElementById('traffic_manual').value
+          body: JSON.stringify({
+              from: document.getElementById('from').value,
+              to: document.getElementById('to').value,
+              real_distance: routeData.distance, 
+              user_speed: document.getElementById('speed').value,
+              vehicle_type: document.getElementById('vehicle').value,
+              detected_road: routeData.road,
+              manual_traffic: document.getElementById('traffic_manual').value,
+              ai_mode: document.getElementById('ai_mode').value // SEND MODE
           })
       })
       .then(res => res.json())
@@ -376,7 +371,8 @@
               dist: p.distance,
               dur: p.duration,
               notes: p.traffic_level + " Traffic via " + p.via,
-              traffic_level: p.traffic_level // Extract just the word "Heavy"/"Light"
+              traffic_level: p.traffic_level,
+              route_type: data.routes.primary.type // Save whether it was Optimized/Raw
           };
           document.getElementById('save-area').style.display = 'block';
       })
@@ -387,7 +383,7 @@
       });
   });
 
-  // --- SAVE TRIP (UPDATED: SENDS VEHICLE & TRAFFIC) ---
+  // --- SAVE TRIP ---
   document.getElementById('confirm-save').addEventListener('click', () => {
       if(!currentPredictionData) return;
       const btn = document.getElementById('confirm-save');
@@ -405,12 +401,11 @@
               destination: currentPredictionData.end,
               distance_km: currentPredictionData.dist,
               duration_minutes: currentPredictionData.dur,
-              route_type: "Optimized",
+              // Use dynamic route type instead of hardcoded
+              route_type: currentPredictionData.route_type || "Optimized", 
               start_date: new Date().toISOString().slice(0,10),
               end_date: new Date().toISOString().slice(0,10),
               notes: currentPredictionData.notes,
-              
-              // --- CRITICAL ADDITION FOR RUBRIC ---
               traffic_condition: currentPredictionData.traffic_level, 
               vehicle_type: document.getElementById('vehicle').value
           })
