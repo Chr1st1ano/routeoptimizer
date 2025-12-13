@@ -1,5 +1,7 @@
 # Predictive Route Optimizer 🚛 📍
 
+[![View Presentation](https://img.shields.io/badge/View_Presentation-Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://www.canva.com/design/DAG7G2LSByM/kstmMU5P6DpEA2K87XsPuQ/edit?utm_content=DAG7G2LSByM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
@@ -52,19 +54,19 @@ Follow these steps to set up the project locally.
 
 ### Step-by-Step Guide
 
-1.  **Clone the Repository**
+1. **Clone the Repository**
     ```bash
     git clone [https://github.com/yourusername/predictive-route-optimizer.git](https://github.com/yourusername/predictive-route-optimizer.git)
     cd predictive-route-optimizer
     ```
 
-2.  **Install Dependencies**
+2. **Install Dependencies**
     Use Composer to install the Laravel framework and the `php-ml` library.
     ```bash
     composer install
     ```
 
-3.  **Environment Configuration**
+3. **Environment Configuration**
     Copy the example environment file and configure your database settings.
     ```bash
     cp .env.example .env
@@ -79,24 +81,24 @@ Follow these steps to set up the project locally.
     DB_PASSWORD=
     ```
 
-4.  **Generate App Key**
+4. **Generate App Key**
     ```bash
     php artisan key:generate
     ```
 
-5.  **Database Migration**
+5. **Database Migration**
     Create the tables for routes, historical data, and user logs.
     ```bash
     php artisan migrate
     ```
 
-6.  **Train the Model (Optional)**
+6. **Train the Model (Optional)**
     If you have a seeding script to pre-train the `php-ml` model:
     ```bash
     php artisan ml:train
     ```
 
-7.  **Serve the Application**
+7. **Serve the Application**
     ```bash
     php artisan serve
     ```
@@ -108,9 +110,9 @@ Follow these steps to set up the project locally.
 
 This project avoids the complexity of microservices by keeping the ML logic within PHP.
 
-1.  **Data Ingestion:** Historical trip data (distance, time of day, weather condition) is stored in MySQL.
-2.  **Training:** The `php-ml` library uses this data to train a **LeastSquares Regression** (or similar) model.
-3.  **Prediction:** When a user requests a route via the Blade interface, the controller passes the coordinates to the model, which predicts the estimated time of arrival (ETA) based on learned patterns.
+1. **Data Ingestion:** Historical trip data (distance, time of day, weather condition) is stored in MySQL.
+2. **Training:** The `php-ml` library uses this data to train a **LeastSquares Regression** (or similar) model.
+3. **Prediction:** When a user requests a route via the Blade interface, the controller passes the coordinates to the model, which predicts the estimated time of arrival (ETA) based on learned patterns.
 
 ---
 
