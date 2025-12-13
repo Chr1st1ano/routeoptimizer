@@ -130,3 +130,6 @@ This project avoids the complexity of microservices by keeping the ML logic with
 ├── /views               # Blade Templates
 /database
 ├── /migrations          # Database schemas
+
+Canva Presentation
+https://www.canva.com/design/DAG7G2LSByM/kstmMU5P6DpEA2K87XsPuQ/edit?utm_content=DAG7G2LSByM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
