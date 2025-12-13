@@ -125,6 +125,3 @@ This project avoids the complexity of microservices by keeping the ML logic with
 ├── /views               # Blade Templates
 /database
 ├── /migrations          # Database schemas
-
-
-
