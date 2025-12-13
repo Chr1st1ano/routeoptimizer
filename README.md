@@ -1,4 +1,7 @@
-# Predictive Route Optimizer 🚛 📍
+# Predictive Route Optimizer 🚛 📍<img width="1920" height="1020" alt="Screenshot 2025-12-13 225957" src="https://github.com/user-attachments/assets/b2c89e10-8fa5-40e4-b139-c187c17b85d2" />
+<img width="1920" height="1020" alt="Screenshot 2025-12-13 225926" src="https://github.com/user-attachments/assets/55c6200c-6976-42e0-9faf-55f08d0a3cc9" />
+<img width="1920" height="1080" alt="Screenshot 2025-12-13 230553" src="https://github.com/user-attachments/assets/bfda0ccf-423e-4441-a315-f74bd05baf01" />
+
 
 [![View Presentation](https://img.shields.io/badge/View_Presentation-Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://www.canva.com/design/DAG7G2LSByM/kstmMU5P6DpEA2K87XsPuQ/edit?utm_content=DAG7G2LSByM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
