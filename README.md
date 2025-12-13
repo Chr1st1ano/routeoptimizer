@@ -3,7 +3,8 @@
 <img width="1920" height="1080" alt="Screenshot 2025-12-13 230553" src="https://github.com/user-attachments/assets/bfda0ccf-423e-4441-a315-f74bd05baf01" />
 
 
-[![View Presentation](https://img.shields.io/badge/View_Presentation-Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://www.canva.com/design/DAG7G2LSByM/kstmMU5P6DpEA2K87XsPuQ/edit?utm_content=DAG7G2LSByM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+[![Canva Link](https://img.shields.io/badge/View_Presentation-Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://www.canva.com/design/DAG7G2LSByM/kstmMU5P6DpEA2K87XsPuQ/edit?utm_content=DAG7G2LSByM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+[![Video Presentation](https://img.shields.io/badge/View_Presentation-Canva-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://www.youtube.com/watch?v=kqdE2TkpGr0)
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
